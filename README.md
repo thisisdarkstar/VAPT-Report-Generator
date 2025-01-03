@@ -75,3 +75,6 @@ To get a visual understanding of the web UI, you can refer to the following GIF:
 ### Output file
 
 ![The generate report](./sample%20output/2025-01-03%2014-54-45.gif)
+
+
+**If you encounter any bugs feel free to suggest me better approach**
