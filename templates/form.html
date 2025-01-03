@@ -11,10 +11,13 @@
             margin: 20px;
             padding: 20px;
             background-color: #f4f4f4;
+            box-sizing: border-box;
         }
 
         h1 {
             color: #333;
+            margin: 1rem;
+            text-align: center;
         }
 
         form {
@@ -22,6 +25,9 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 70%;
+            margin: 0 auto;
+            padding-right: 35px;
         }
 
         label {
@@ -33,6 +39,15 @@
         input[type="url"],
         textarea {
             width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        select {
+            width: 30%;
             padding: 8px;
             margin-top: 5px;
             margin-bottom: 10px;
@@ -57,7 +72,7 @@
 </head>
 
 <body>
-    <h1>Fill in the Details</h1>
+    <h1>VAPT Report Generator</h1>
     <form action="/generate" method="post">
         <label>Output File Name: <input type="text" name="output"></label><br>
         <label>Vulnerability Title: <input type="text" name="title"></label><br>
@@ -72,11 +87,11 @@
         <label>CVSS Score: <input type="text" name="cvss_score"></label><br>
         <label>CWE-ID: <input type="text" name="cwe_id"></label><br>
         <label>OWASP Category: <input type="text" name="owasp_category"></label><br>
-        <label>Description: <textarea name="description"></textarea></label><br>
-        <label>Impact: <textarea name="impact"></textarea></label><br>
+        <label>Description: <textarea rows="8" name="description"></textarea></label><br>
+        <label>Impact: <textarea rows="5" name="impact"></textarea></label><br>
         <label>Affected URL: <input type="url" name="affected_url"></label><br>
         <label>Reference URL: <input type="url" name="reference_url"></label><br>
-        <label>Recommendations: <textarea name="recommendations"></textarea></label><br>
+        <label>Recommendations: <textarea rows="8" name="recommendations"></textarea></label><br>
         <label>Steps to Reproduce: <textarea name="steps"></textarea></label><br>
         <button type="submit">Generate Document</button>
     </form>
