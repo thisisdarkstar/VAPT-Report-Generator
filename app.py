@@ -15,6 +15,7 @@ def generate_docx():
     # Collect form data
     data = {
         "output": request.form["output"],
+        "vulnerability_title": request.form["title"],
         "severity": request.form["severity"],
         "status": request.form["status"],
         "cvss_score": request.form["cvss_score"],
@@ -29,7 +30,7 @@ def generate_docx():
     }
 
     # Load the template and populate it
-    template_path = "./testing format.docx"
+    template_path = "./template.docx"
     doc = Document(template_path)
 
     # Example for populating fields
@@ -39,6 +40,9 @@ def generate_docx():
                 for key, value in data.items():
                     if key.lower() in cell.text:
                         cell.text = cell.text.replace(key.lower(), value)
+                        cell.text = cell.text.replace(
+                            "vulnerability_title", data["vulnerability_title"]
+                        )
 
     # Save the updated document
     output_path = data["output"] + ".docx"

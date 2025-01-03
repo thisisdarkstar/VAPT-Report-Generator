@@ -1,0 +1,8 @@
+.pyenv
+.vscode
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.docx
+!template.docx
