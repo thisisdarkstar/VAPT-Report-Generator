@@ -46,12 +46,36 @@
             border-radius: 4px;
         }
 
+        input[name="steps[]"] {
+            width: 90%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
         select {
             width: 30%;
             padding: 8px;
             margin-top: 5px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        img {
+            image-resolution: 16/9;
+            max-width: 100%;
+            height: auto;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
             border-radius: 4px;
         }
 
@@ -63,6 +87,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            margin: 0.5rem 0;
         }
 
         button:hover {
@@ -73,7 +98,7 @@
 
 <body>
     <h1>VAPT Report Generator</h1>
-    <form action="/generate" method="post">
+    <form action="/generate" method="post" enctype="multipart/form-data">
         <label>Output File Name: <input type="text" name="output"></label><br>
         <label>Vulnerability Title: <input type="text" name="title"></label><br>
         <label>Severity: <input type="text" name="severity"></label><br>
@@ -92,9 +117,69 @@
         <label>Affected URL: <input type="url" name="affected_url"></label><br>
         <label>Reference URL: <input type="url" name="reference_url"></label><br>
         <label>Recommendations: <textarea rows="8" name="recommendations"></textarea></label><br>
-        <label>Steps to Reproduce: <textarea name="steps"></textarea></label><br>
+        <label>Steps to Reproduce:</label>
+        <div id="steps-container">
+            <div class="step">
+                <label>Step 1: <input type="text" name="steps[]"></label><br>
+                <label>Picture 1: <input type="file" name="pictures[]" data-step="1"
+                        onchange="previewImage(this)"></label><br>
+                <img id="preview-1" src="https://via.placeholder.com/150" alt="Step 1 Picture"><br>
+                <button type="button" onclick="removeStep(this)">Remove Step</button><br>
+            </div>
+        </div>
+        <button type="button" onclick="addStep()">Add Step</button><br>
         <button type="submit">Generate Document</button>
     </form>
+    <script>
+        let stepCount = 1;
+
+        function previewImage(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const step = input.getAttribute('data-step');
+                    const imgId = `preview-${step}`;
+                    document.getElementById(imgId).src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function addStep() {
+            stepCount++;
+            const stepsContainer = document.getElementById('steps-container');
+            const newStep = document.createElement('div');
+            newStep.classList.add('step');
+            newStep.innerHTML = `
+                <label>Step ${stepCount}: <input type="text" name="steps[]"></label><br>
+                <label>Picture ${stepCount}: <input type="file" name="pictures[]" data-step="${stepCount}" onchange="previewImage(this)"></label><br>
+                <img id="preview-${stepCount}" src="https://via.placeholder.com/150" alt="Step ${stepCount} Picture"><br>
+                <button type="button" onclick="removeStep(this)">Remove Step</button><br>
+            `;
+            stepsContainer.appendChild(newStep);
+        }
+
+        function removeStep(button) {
+            const step = button.parentElement;
+            step.remove();
+            stepCount--;
+            updateStepNumbers();
+        }
+
+        function updateStepNumbers() {
+            const steps = document.querySelectorAll('#steps-container .step');
+            steps.forEach((step, index) => {
+                const stepNumber = index + 1;
+                step.querySelector('label').innerHTML = `Step ${stepNumber}: <input type="text" name="steps[]">`;
+                const pictureLabel = step.querySelector('label:nth-of-type(2)');
+                pictureLabel.innerHTML = `Picture ${stepNumber}: <input type="file" name="pictures[]" data-step="${stepNumber}" onchange="previewImage(this)">`;
+                const img = step.querySelector('img');
+                img.id = `preview-${stepNumber}`;
+                img.alt = `Step ${stepNumber} Picture`;
+            });
+        }
+    </script>
 </body>
 
 </html>
