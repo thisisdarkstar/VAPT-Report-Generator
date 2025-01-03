@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Fill in the Details</h1>
+    <form action="/generate" method="post">
+        <label>Output File Name: <input type="text" name="output"></label><br>
+        <label>Severity: <input type="text" name="severity"></label><br>
+        <label>Status:
+            <select name="status" id="status" type="text">
+                <option value="N/A">N/A</option>
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+            </select>
+        </label><br>
+        <label>CVSS Score: <input type="text" name="cvss_score"></label><br>
+        <label>CWE-ID: <input type="text" name="cwe_id"></label><br>
+        <label>OWASP Category: <input type="text" name="owasp_category"></label><br>
+        <label>Description: <textarea name="description"></textarea></label><br>
+        <label>Impact: <textarea name="impact"></textarea></label><br>
+        <label>Affected URL: <input type="url" name="affected_url"></label><br>
+        <label>Reference URL: <input type="url" name="reference_url"></label><br>
+        <label>Recommendations: <textarea name="recommendations"></textarea></label><br>
+        <label>Steps to Reproduce: <textarea name="steps"></textarea></label><br>
+        <button type="submit">Generate Document</button>
+    </form>
+</body>
+
+</html>
