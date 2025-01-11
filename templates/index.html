@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
+        <h2>Upload Json Data</h2>
+        <div class="file-upload">
+            <label for="jsonFileInput" class="file-upload-label">
+                <span class="upload-icon">📁</span>
+                <span class="upload-text">Drag and Drop a JSON file here or click to upload</span>
+            </label>
+            <input type="file" id="jsonFileInput" accept=".json" onchange="updateFileName(this)">
+            <span id="fileName" class="file-name"></span>
+        </div>
+        <button id="processButton">Load Data</button>
+        <div id="output"></div>
+    </div>
+    <div class="content" id="content">
+        <button id="clearBtn" onclick="ClearForm()">Clear Form</button>
+        <h1>VAPT Report Generator</h1>
+        <form action="/generate" method="post" enctype="multipart/form-data">
+            <label>Output File Name: <input type="text" name="output"></label><br>
+            <label>Vulnerability Title: <input type="text" name="title"></label><br>
+            <label>Severity: <input type="text" name="severity"></label><br>
+            <label>Status:
+                <select name="status" id="status" type="text">
+                    <option value="N/A">N/A</option>
+                    <option value="Open">Open</option>
+                    <option value="Closed">Closed</option>
+                </select>
+            </label><br>
+            <label>CVSS Score: <input type="text" name="cvss_score"></label><br>
+            <label>CWE-ID: <input type="text" name="cwe_id"></label><br>
+            <label>OWASP Category: <input type="text" name="owasp_category"></label><br>
+            <label>Description: <textarea rows="8" name="description"></textarea></label><br>
+            <label>Impact: <textarea rows="5" name="impact"></textarea></label><br>
+            <label>Affected URL: <input type="url" name="affected_url"></label><br>
+            <label>Reference URL: <input type="url" name="reference_url"></label><br>
+            <label>Recommendations: <textarea rows="8" name="recommendations"></textarea></label><br>
+            <label>Steps to Reproduce:</label>
+            <div id="steps-container">
+                <div class="step">
+                    <label>Step 1: <input type="text" name="steps[]"></label><br>
+                    <label>Picture 1: <input type="file" name="pictures[]" data-step="1"
+                            onchange="previewImage(this)"></label><br>
+                    <img id="preview-1" src="https://via.placeholder.com/150" alt="Step 1 Picture"><br>
+                    <button type="button" onclick="removeStep(this)">Remove Step</button><br>
+                </div>
+            </div>
+            <button type="button" onclick="addStep()">Add Step</button><br>
+            <button type="submit">Generate Document</button>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
