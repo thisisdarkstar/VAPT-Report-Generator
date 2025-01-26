@@ -63,8 +63,7 @@ python app.py
 This will start the application, and you should see output indicating that the server is running. 
 
 ## Accessing the Server
-
-Navigate to `http://127.0.0.1:5000` in your web browser to access the server.
+Navigate to `http://127.0.0.1` in your web browser to access the server.
 
 ### Web UI
 
